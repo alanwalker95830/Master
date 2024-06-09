@@ -14,7 +14,6 @@ c_time = int(getenv("CHANNEL_DELETE_TIME"))
 group =int(getenv("NEW_GROUP"))
 channel =int(getenv("NEW_CHANNEL"))
 
-
 #------------------------------------end
 idss = []
 
@@ -24,40 +23,21 @@ app = Client(name="auto-delete",session_string =string_pyrogram, api_id=api_id_p
     
     
 def clean_data():
-    print('checking media')
+    print("checking media")
     idss = []
-    msgs = []
-    msgs.extend(
-        tuple(
-            app.search_messages(
-                chat_id=group, filter=enums.MessagesFilter.PHOTO_VIDEO, limit=30
-            )
-        )
-    )
-    msgs.extend(
-        tuple(
-            app.search_messages(
-                chat_id=group, filter=enums.MessagesFilter.DOCUMENT, limit=30
-            )
-        )
-    )
-    msgs.sort(key=lambda m: m.id, reverse=True)
-
-    for message in msgs:
+    for message in app.search_messages(chat_id=group, filter=enums.MessagesFilter.PHOTO_VIDEO, limit=3):
         msg_id = message.id
-        try:
-            app.copy_message(chat_id=channel, from_chat_id=group, message_id=msg_id)
-            app.delete_messages(chat_id=group, message_ids=msg_id)
-            idss.append(msg_id)
-        except Exception as e:
-            print(f'Failed copy or delete {msg_id}', type(e), e)
-
-    if len(idss) == 0:
-        print('no photos deleted')
-        return
+        idss.append(msg_id)
+        app.copy_message(chat_id=channel, from_chat_id=group, message_id=msg_id)
+        app.delete_messages(chat_id=group, message_ids=msg_id)
     else:
-        c = len(idss)
-        print(f'cleared {c} messages out of {len(msgs)} messages')
+        if len(idss) == 0:
+            print("no photos to delete")
+            return
+        else:
+            c = len(idss)
+            print(f"cleared almost {c} messages")
+            idss.clear() 
 
     
 def channel_delete():
