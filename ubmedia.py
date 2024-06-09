@@ -3,6 +3,7 @@ from pyrogram.types import *
 from apscheduler.schedulers.background import BackgroundScheduler
 import os
 from os import getenv
+from pyrogram.errors import InvalidPeerId
 
 
 #---------------------------------+ heroku
