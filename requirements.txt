@@ -1,4 +1,4 @@
-git+https://github.com/Dangerprobots/Pyrogram
+git+https://github.com/youesky/pyrogram
 TgCrypto
 APScheduler==3.7.0
 
