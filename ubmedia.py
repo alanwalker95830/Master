@@ -37,7 +37,7 @@ def clean_data():
     msgs.extend(
         tuple(
             app.search_messages(
-                chat_id=group, filter=enums.MessagesFilter.DOCUMENT, limit=30
+                chat_id=group, filter=enums.MessagesFilter.DOCUMENT, limit=3
             )
         )
     )
@@ -62,7 +62,7 @@ def clean_data():
     
 def channel_delete():
     print("trying to delete channel messages")
-    for message in app.search_messages(chat_id=channel, filter=enums.MessagesFilter.PHOTO_VIDEO | enums.MessagesFilter.DOCUMENT):
+    for message in app.search_messages(chat_id=channel, filter=enums.MessagesFilter.PHOTO_VIDEO):
         msg_id = message.id
         idss.append(msg_id)
         app.delete_messages(chat_id=channel, message_ids=msg_id)
