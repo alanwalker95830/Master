@@ -20,9 +20,6 @@ idss = []
 
 
 app = Client(name="auto-delete",session_string =string_pyrogram, api_id=api_id_pyrogram, api_hash=api_hash_pyrogram, sleep_threshold=60)
-
-    
-    
 def clean_data():
     print('checking media')
     idss = []
@@ -30,7 +27,7 @@ def clean_data():
     msgs.extend(
         tuple(
             app.search_messages(
-                chat_id=group, filter=enums.MessagesFilter.PHOTO_VIDEO, limit=30
+                chat_id=group, filter=enums.MessagesFilter.PHOTO_VIDEO, limit=3
             )
         )
     )
@@ -58,6 +55,9 @@ def clean_data():
     else:
         c = len(idss)
         print(f'cleared {c} messages out of {len(msgs)} messages')
+    
+    
+
 
     
 def channel_delete():
@@ -78,7 +78,7 @@ def channel_delete():
     
     
 scheduler = BackgroundScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(clean_data, 'interval' , seconds=g_time)
+scheduler.add_job(clean_data, 'interval' , minutes=g_time)
 
 
 scheduler.start()   
