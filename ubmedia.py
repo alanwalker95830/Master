@@ -62,7 +62,7 @@ def clean_data():
     
 def channel_delete():
     print("trying to delete channel messages")
-    for message in app.search_messages(chat_id=channel, filter=enums.MessagesFilter.PHOTO_VIDEO):
+    for message in app.search_messages(chat_id=channel):
         msg_id = message.id
         idss.append(msg_id)
         app.delete_messages(chat_id=channel, message_ids=msg_id)
@@ -73,7 +73,7 @@ def channel_delete():
         else:
             c = len(idss)
             print(f"almost {c} files deleted")
-            idss.clear() 
+            idss.clear()
 
     
     
