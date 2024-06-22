@@ -60,20 +60,20 @@ def clean_data():
 
 
     
-def channel_delete():
+async def channel_delete():
     print("trying to delete channel messages")
-    #for message in app.search_messages(chat_id=channel):
+    idss = []  
+   async for message in app.search_messages(chat_id=channel):
         msg_id = message.id
         idss.append(msg_id)
         app.delete_messages(chat_id=channel, message_ids=msg_id)
+
+    if len(idss) == 0:
+        print("no messages to delete")
     else:
-        if len(idss) == 0:
-            print("no photos to delete")
-            return
-        else:
-            c = len(idss)
-            print(f"almost {c} files deleted")
-            idss.clear()
+        c = len(idss)
+        print(f"almost {c} messages deleted")
+        idss.clear()
 
     
     
